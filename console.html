@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="logo.png">
+  <title>AdminConsole</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+  <script src="./firebase-config.js"></script>
+
+</head>
+
+<body>
+  <div id="header">
+    <h1>Welcome, <span id="user"></span> !</h1>
+    <button id="generateQRcode">Generate QR Code</button>
+  </div>
+
+  <table><!-- rates and pricelist update -->
+    <tr>
+      <td>
+        <p>The current rate is: <span id="rate"></span> LL</p>
+        <p>It was last modified on <span id="lastRate"></span></p>
+      </td>
+      <td>
+        <button id="changeRate" onclick="handleRateChange()">Change Rate</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>The current pricelist has <span id="records">Loading...</span> items</p>
+        <p>It was last modified on <span id="lastList">Loading...</span></p>
+      </td>
+      <td>
+        <button onclick="handleFileSelection(shopID)">Choose File</button>
+      </td>
+    </tr>
+  </table>
+  <br> <!-- promotions section -->
+  <form id="promotionForm" onsubmit="handlePromotionFormSubmit(event, shopID)">
+    <fieldset>
+      <legend>Add a promotion</legend>
+      <div>
+        <input type="text" id="promotionText" name="Promotion Text">
+        <br>
+        <input type="file" id="promotionImage" name="Promotion Image" accept="images/*, videos/*">
+        <br>
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="date" id="expiryDate">
+      </div>
+      <div>
+        <button type="submit" id="addPromo">Add</button>
+      </div>
+    </fieldset>
+  </form>
+  <br>
+  <hr>
+
+  <!-- Promotions List -->
+  <h3>Promotions List</h3>
+  <table id="promotionsTable">
+    <thead>
+      <tr>
+        <th>Promotion</th>
+        <th>Expiry Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="promotionsTableBody">
+      <!-- Promotions will be dynamically added here -->
+    </tbody>
+  </table>
+
+
+
+  <script src="javascript/dashboard.js"></script>
+  <script src="javascript/pricelist.js"></script>
+  <script src="javascript/promotion.js"></script>
+</body>
+
+</html>
